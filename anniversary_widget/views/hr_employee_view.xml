@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_tree_inherit_anniversary" model="ir.ui.view">
+        <field name="name">hr.employee.tree.anniversary</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_email']" position="after">
+                <field name="anniversary_date" string="Anniversary info" widget="anniversaryinfo"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_kanban_view_employees_inherit_anniversary" model="ir.ui.view">
+        <field name="name">hr.employee.kanban.inherit.anniversary</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_email']" position="after">
+                <ul>
+                    <li id="anniversary_info"/>
+                    <li t-if="record.anniversary_date.raw_value" class="o_text_overflow">
+                        <field name="anniversary_date" string="Anniversary info" widget="anniversaryinfo"/>
+                    </li>
+                </ul>
+            </xpath>
+        </field>
+    </record>
+
+    
+</odoo>
