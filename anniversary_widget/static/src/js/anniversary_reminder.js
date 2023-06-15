@@ -24,19 +24,12 @@ var anniversaryinfo = AbstractField.extend({
        
         var nowtimeUTC = moment().utc();
         var nowUsertimeTZ = nowtimeUTC.clone().add(session.getTZOffset(nowtimeUTC), 'minutes');
-        console.log("this.value",this.value);
         var contract_date = this._formatValue(this.value, 'date')
-        console.log("contract_date",contract_date);
         var fieldDataValue = this.value;
-        console.log("fieldDataValue1",fieldDataValue);
         var diffDays = Math.abs(fieldDataValue.startOf('day').diff(nowUsertimeTZ.startOf('day'), 'days'));
         var diffYears = Math.abs(fieldDataValue.startOf('day').diff(nowUsertimeTZ.startOf('day'), 'years'));
-        console.log("fieldDataValue2",fieldDataValue);
-        console.log("diffDays",diffDays);
-        console.log("diffYears",diffYears);
         diffDays = diffDays - (diffYears*365)
         diffDays = 365 - Math.abs(diffDays)
-        console.log("diffDays",diffDays);
         let text;
         if (fieldDataValue > nowUsertimeTZ) {
             text = "Join on: " + this.value.format('DD/MMM/YYYY');
@@ -54,36 +47,7 @@ var anniversaryinfo = AbstractField.extend({
              text = "Joined on: "+ this.value.format('DD/MMM/YYYY');
              this.$el.toggleClass('text-muted font-weight-bold');
         }
-        
-        // const contract_date = this._formatValue(this.value, 'date')
-        // const contract_date_value = this.value
-        // console.log("contract_date",contract_date,contract_date_value);
-        // var fieldDataValue = this.value;
-        // fieldDataValue = fieldDataValue.year(nowUsertimeTZ.year()+1);
-        // var diffDays = fieldDataValue.startOf('day').diff(nowUsertimeTZ.startOf('day'), 'days');
-        // console.log("diff",diffDays);
-        // var text;
-        // console.log("contract_date_value",contract_date_value);
-        // console.log("nowUsertimeTZ",nowUsertimeTZ);
-        // if (contract_date_value > nowUsertimeTZ) {
-        //     text = "Join1 on:" + this._formatValue(contract_date, 'date');
-        //     console.log("contract_date2",contract_date);
-        //     this.$el.toggleClass('text-muted font-weight-bold');
-        // }
-        // else if (diffDays === 1) {
-        //     text = _t("Anniversary on Tomorrow ");
-        // } else if (diffDays === 0) {
-        //     text = _t(" Anniversary Today ");
-        // } else if (diffDays > 0 && diffDays <= 30) {
-        //     text = _.str.sprintf(_t('Anniversary in %s days'), diffDays);
-        // } else if (diffDays > 0 && diffDays > 365) {
-        //     var diffMonths = parseInt(diffDays/30);
-        //     text = _.str.sprintf(_t('Anniversary in %s months'), diffMonths);
-        // }        
-        // else {
-        //      text = "Joined on:"+this._formatValue(this.value, 'date');
-        //      this.$el.toggleClass('text-muted font-weight-bold');
-        // }        
+         
         this.$el.text(text).attr('title',  this.value.format('DD/MMM/YYYY') );
         this.$el.toggleClass('text-primary font-weight-bold', diffDays > 0 && diffDays > 30);
         this.$el.toggleClass('text-warning font-weight-bold', diffDays > 0 && diffDays <= 30);
